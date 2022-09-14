@@ -1,5 +1,8 @@
 package fr.triedge.todo.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class User {
 
     private int userId;
@@ -7,6 +10,19 @@ public class User {
     private String displayName;
     private String password;
     private int level;
+
+    public User(){}
+
+    public User(ResultSet res){
+        try {
+            setUserId(res.getInt("user_id"));
+            setName(res.getString("user_name"));
+            setDisplayName(res.getString("user_display_name"));
+            setLevel(res.getInt("user_level"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public int getUserId() {
         return userId;

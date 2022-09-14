@@ -3,18 +3,19 @@ package fr.triedge.todo.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Project {
+public class Status {
+
     private int id;
     private String name;
-    private int priority;
+    private String color;
 
-    public Project(){}
+    public Status(){}
 
-    public Project(ResultSet res){
+    public Status(ResultSet res){
         try {
-            setId(res.getInt("project_id"));
-            setName(res.getString("project_name"));
-            setPriority(res.getInt("project_priority"));
+            setId(res.getInt("status_id"));
+            setName(res.getString("status_name"));
+            setColor(res.getString("status_color"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -36,11 +37,11 @@ public class Project {
         this.name = name;
     }
 
-    public int getPriority() {
-        return priority;
+    public String getColor() {
+        return color;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public void setColor(String color) {
+        this.color = color;
     }
 }

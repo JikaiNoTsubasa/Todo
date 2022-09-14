@@ -1,6 +1,8 @@
 package fr.triedge.todo.database;
 
+import fr.triedge.todo.model.Entry;
 import fr.triedge.todo.model.Project;
+import fr.triedge.todo.model.Status;
 import fr.triedge.todo.model.User;
 import fr.triedge.todo.utils.PWDManager;
 
@@ -41,15 +43,32 @@ public class DB {
         PreparedStatement stmt = getConnection().prepareStatement(sql);
         ResultSet res = stmt.executeQuery();
         while (res.next()){
-            Project p = new Project();
-            p.setId(res.getInt("project_id"));
-            p.setName(res.getString("project_name"));
-            p.setPriority(res.getInt("project_priority"));
+            Project p = new Project(res);
             projects.add(p);
         }
         res.close();
         stmt.close();
         return projects;
+    }
+
+    public ArrayList<Entry> getEntries() throws SQLException {
+        ArrayList<Entry> entries = new ArrayList<>();
+        String sql = "select * from td_entry left join ama_user on entry_user=user_id left join td_status on status_id=entry_status left join td_project on entry_project=project_id order by project_priority,entry_priority asc";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        ResultSet res = stmt.executeQuery();
+        while(res.next()){
+            Project p = new Project(res);
+            Status s = new Status(res);
+            User u = new User(res);
+            Entry e = new Entry(res);
+            e.setProject(p);
+            e.setStatus(s);
+            e.setUser(u);
+            entries.add(e);
+        }
+        res.close();
+        stmt.close();
+        return entries;
     }
 
     public User loginUser(String name, String password, boolean isEncrypted) throws SQLException {
@@ -58,7 +77,7 @@ public class DB {
         String pwd = password;
         if (isEncrypted)
             pwd = new PWDManager().encode(password);
-        String sql = "select * from ama_user where user_name='?' and user_password='?'";
+        String sql = "select * from ama_user where user_name=? and user_password2=?";
         User user = null;
         PreparedStatement stmt = getConnection().prepareStatement(sql);
         stmt.setString((int)1, name);
