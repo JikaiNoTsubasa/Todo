@@ -55,11 +55,72 @@
             });
 
             $("#modal-close").click(function(){
-                $("#modal").hide();
+                closeModal();
             });
+
+            var modal = document.getElementById("modal");
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            }
 
             ajaxRefreshEntries();
         });
+
+        function openModalShowEntry(id){
+            $.ajax({
+                url: 'ajaxentries',
+                method: 'get',
+                data: {
+                    strutsAction: 'showEntry',
+                    strutsEntryId: id
+                },
+                success: function(response){
+                    console.log(response);
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
+        function openModalDelete(id){
+            $.ajax({
+                url: 'ajaxentries',
+                method: 'get',
+                data: {
+                    strutsAction: 'askConfirmDelete',
+                    strutsEntryId: id
+                },
+                success: function(response){
+                    console.log(response);
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
+        function callbackDelete(){
+            ajaxRefreshEntries();
+        }
+
+        function callbackChangeStatus(){
+            ajaxRefreshEntries();
+        }
+
+        function closeModal(){
+            $("#modal").hide();
+        }
     </script>
 </body>
 </html>

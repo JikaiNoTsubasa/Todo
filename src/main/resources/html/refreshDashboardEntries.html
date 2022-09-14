@@ -1,0 +1,18 @@
+<div class="sb-entry">
+    <div class="sb-entry-title">
+        ###id## [<span style="color:##color##">##status##</span>] <a class="sb-link" href="#" onclick="openModalShowEntry(##id##);">##name##</a><br>
+        ##desc##
+    </div>
+    <div class="sb-entry-priority">
+        ##prio##
+    </div>
+    <div class="sb-entry-action">
+        <select class="sb-dropdown" onchange="ajaxChangeStatus(##id##,this.value);">
+            <option value="-1">Status</option>
+            <option value="2">InProgress</option>
+            <option value="3">Done</option>
+        </select>
+        <span class="sb-button" onclick="openModal(##id##);">Edit</span>
+        <span class="sb-button" onclick="openModalDelete(##id##);">Delete</span>
+    </div>
+</div>

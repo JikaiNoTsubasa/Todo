@@ -23,6 +23,9 @@
         <action name="index" class="fr.triedge.todo.controllers.IndexAction">
             <result name="success">/index.jsp</result>
         </action>
+        <action name="archive" class="fr.triedge.todo.controllers.ArchiveAction">
+            <result name="success">/archive.jsp</result>
+        </action>
         <action name="register" class="fr.triedge.todo.controllers.LoginAction" method="processForm">
             <result name="askLogin">/login.jsp</result>
             <result name="success" type="chain">index</result>
