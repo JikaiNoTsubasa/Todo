@@ -1,0 +1,309 @@
+html{
+    margin:0;
+    padding:0;
+    width: 100%;
+}
+
+body{
+    font-family: Roboto;
+    font-size: 15px;
+    margin:0;
+    padding:0;
+    width: 100%;
+    background-color: #1F1F1F;
+    color: #FAFAFA;
+}
+
+.sb-menu-bar{
+    width: 100%;
+    box-sizing: border-box;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #404040;
+    padding-left: 50px;
+}
+
+.sb-menu-bar a{
+    text-decoration: none;
+    display: inline-block;
+    color: #FAFAFA;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.sb-menu-bar a:hover{
+    text-decoration: none;
+    border-bottom: 1px solid #FF4F00;
+
+}
+
+.sb-menu-right{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.sb-menu-right a{
+    text-decoration: none;
+    display: inline-block;
+    color: #FAFAFA;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.sb-menu-right a:hover{
+    text-decoration: none;
+    border-bottom: 1px solid #FF4F00;
+
+}
+
+.sb-container{
+    width: 80%;
+    margin: auto;
+}
+
+.sb-margin-top{
+    margin-top: 20px;
+}
+
+.sb-card{
+    background-color: #333;
+    border: 1px solid #404040;
+    color: #FAFAFA;
+    border-radius: 0.25rem;
+}
+
+.sb-card-header{
+    border-bottom: 1px solid #404040;
+    /*
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    */
+    padding: 1rem;
+    background-color: #1F1F1F;
+}
+
+.sb-card-body{
+    padding: 1rem;
+    background-color: #333;
+}
+
+.sb-link{
+    text-decoration: none;
+    color: #FAFAFA;
+}
+
+.sb-link:hover{
+    color:#FF4F00;
+}
+
+.sb-link2{
+    text-decoration: none;
+    color: #FF4F00;
+    cursor: pointer;
+}
+
+.sb-link2:hover{
+    text-decoration: underline;
+}
+
+.sb-entry{
+    display:flex;
+    font-size: 12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.sb-entry-title{
+    flex: auto;
+    min-width: 0;
+}
+
+.sb-entry-action{
+    flex: initial;
+    min-width: 0;
+}
+
+.sb-entry-priority{
+    flex: initial;
+    min-width: 0;
+    width: 100px;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid #404040;
+    border-radius: 0.25rem;
+    color: #FAFAFA;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 5px;
+}
+
+.sb-input{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #333;
+    border-radius: 0.25rem;
+    outline-width: 0;
+    border: 0;
+    caret-color: #FF4F00;
+    color: #FAFAFA;
+}
+
+.sb-input:focus{
+    outline-width: 0;
+}
+
+.sb-textarea{
+    width: 100%;
+    background-color: #333;
+    border-radius: 0.25rem;
+    outline-width: 0;
+    border: 0;
+    caret-color: #FF4F00;
+    color: #FAFAFA;
+}
+
+.sb-textarea:focus{
+    outline-width: 0;
+}
+
+.sb-select{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #333;
+    border-radius: 0.25rem;
+    outline-width: 0;
+    border: 0;
+    color: #FAFAFA;
+}
+
+.sb-select:focus{
+    outline-width: 0;
+}
+
+.w20p{
+    width: 20%;
+}
+
+.sb-right{
+    float: right;
+}
+
+.sb-button{
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid #404040;
+    border-radius: 0.25rem;
+    color: #FAFAFA;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 5px;
+}
+
+.sb-button:hover{
+    border-color: #FF4F00;
+    cursor: pointer;
+}
+
+.sb-dropdown{
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid #404040;
+    border-radius: 0.25rem;
+    background-color: #333;
+    color: #FAFAFA;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 5px;
+}
+
+.sb-dropdown:focus{
+    outline-width: 0;
+}
+
+.sb-modal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.sb-modal-content {
+    background-color: #1F1F1F;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #404040;
+    border-radius: 0.25rem;
+    width: 50%; /* Could be more or less, depending on screen size */
+    min-height: 200px;
+    color: #FAFAFA;
+}
+
+/* The Close Button */
+.sb-close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.sb-close:hover,
+.sb-close:focus {
+    color: #FF4F00;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.sb-w100{
+    width: 100%;
+}
+
+.sb-w80{
+    width: 80%;
+}
+
+.sb-w50{
+    width: 50%;
+}
+
+.sb-table{
+    border: 1px solid #aaaaaa;
+    border-collapse: collapse;
+}
+
+.sb-table td, .sb-table th{
+    border: 1px solid #aaaaaa;
+}
+
+.sb-label{
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    background-color: #333;
+    border-radius: 0.25rem;
+    outline-width: 0;
+    border: 0;
+    color: #FAFAFA;
+    padding: 0px 10px;
+}

@@ -1,0 +1,27 @@
+.sb-notify{
+    position: fixed;
+    display: block;
+    right: 10px;
+    bottom: 10px;
+    animation: blinker 0.2s linear;
+    min-height: 30px;
+    max-width: 400px;
+    min-width: 100px;
+    padding: 20px 10px;
+    border-radius: .25rem;
+    font-size: 20px;
+}
+
+.sb-normal{
+    background-color: #fafafa;
+    color: #404040;
+}
+
+.sb-danger{
+    background-color: #fafafa;
+    color: red;
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
