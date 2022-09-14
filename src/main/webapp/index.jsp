@@ -25,8 +25,8 @@
                     <tr>
                         <td>
                             <select id="select_project" class="sb-select">
-                                <s:iterator value="projects">
-                                    <option value="<s:property value="project_id"></s:property>"><s:property value="project_name"></s:property></option>
+                                <s:iterator var="i" step="1" value="projects">
+                                    <option value="<s:property value="id"></s:property>"><s:property value="name"></s:property></option>
                                 </s:iterator>
                             </select>
                         </td>
@@ -35,7 +35,6 @@
                         </td>
                     </tr>
                 </table>
-
             </div>
         </form>
 
@@ -47,6 +46,18 @@
 
     <script>
         $(function(){
+            $("#form_new_entry").submit(function(e){
+                e.preventDefault();
+                let entry_name = $('#input_new_entry').val();
+                let project_id = $('#select_project').val();
+                $('#input_new_entry').val("");
+                ajaxNewEntry(entry_name, project_id);
+            });
+
+            $("#modal-close").click(function(){
+                $("#modal").hide();
+            });
+
             ajaxRefreshEntries();
         });
     </script>

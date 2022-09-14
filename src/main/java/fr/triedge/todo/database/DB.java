@@ -53,7 +53,7 @@ public class DB {
 
     public ArrayList<Entry> getEntries() throws SQLException {
         ArrayList<Entry> entries = new ArrayList<>();
-        String sql = "select * from td_entry left join ama_user on entry_user=user_id left join td_status on status_id=entry_status left join td_project on entry_project=project_id order by project_priority,entry_priority asc";
+        String sql = "select * from td_entry left join ama_user on entry_user=user_id left join td_status on status_id=entry_status left join td_project on entry_project=project_id order by entry_priority, project_priority asc";
         PreparedStatement stmt = getConnection().prepareStatement(sql);
         ResultSet res = stmt.executeQuery();
         while(res.next()){
@@ -69,6 +69,16 @@ public class DB {
         res.close();
         stmt.close();
         return entries;
+    }
+
+    public void createNewEntry(String name, int projectId, int userId) throws SQLException {
+        String sql = "insert into td_entry(entry_name,entry_project,entry_user)values(?,?,?)";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setString((int)1, name);
+        stmt.setInt((int)2, projectId);
+        stmt.setInt((int)3, userId);
+        stmt.executeUpdate();
+        stmt.close();
     }
 
     public User loginUser(String name, String password, boolean isEncrypted) throws SQLException {

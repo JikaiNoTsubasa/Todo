@@ -13,8 +13,8 @@ public class IndexAction {
     public String execute(){
         try {
             projects = DB.getInstance().getProjects();
-            //projects.forEach(p -> System.out.println("-> "+p.getName()));
         } catch (SQLException e) {
+            System.err.println("Error getting projects. "+e.getMessage());
             throw new RuntimeException(e);
         }
 

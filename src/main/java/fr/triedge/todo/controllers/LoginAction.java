@@ -33,7 +33,7 @@ public class LoginAction {
                 User user = DB.getInstance().loginUser(getStrutsLoginName(), getStrutsLoginPassword(), true);
                 if (user != null){
                     ActionContext.getContext().getSession().put("user", user);
-                    System.out.println("Login success");
+                    //System.out.println("Login success");
                     return "success";
                 }else{
                     System.out.println("Login failed");
