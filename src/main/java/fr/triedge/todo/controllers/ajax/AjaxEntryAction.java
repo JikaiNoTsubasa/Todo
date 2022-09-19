@@ -39,10 +39,36 @@ public class AjaxEntryAction {
                 result = processDeleteEntry();
             }else if (getStrutsAction().equalsIgnoreCase("changeStatus")){
                 result = processChangeStatus();
+            }else if (getStrutsAction().equalsIgnoreCase("editEntry")){
+                result = processEditEntry();
             }
         }
         inputStream = new ByteArrayInputStream(result.getBytes("UTF-8"));
         return "success";
+    }
+
+    private String processEditEntry() throws SQLException {
+        if (getStrutsEntryId() == null)
+            return "Id is null";
+        int id = Integer.parseInt(getStrutsEntryId());
+        Entry entry = DB.getInstance().getEntry(id);
+
+        StringBuilder selectPrio = new StringBuilder();
+
+        for(int i = 1; i <=10; ++i){
+            String sel = "";
+            if (entry.getPriority() == i)
+                sel = "selected";
+            selectPrio.append("<option value=\""+i+"\" "+sel+">"+i+"</option>");
+        }
+
+        Template tpl = new Template("/html/editEntryForm.html");
+        tpl
+                .setParameter("##id##", entry.getId())
+                .setParameter("##name##", entry.getName())
+                .setParameter("##desc##", entry.getDescription())
+                .setParameter("##prio##", selectPrio.toString());
+        return tpl.generate();
     }
 
     private String processChangeStatus() throws SQLException {
@@ -84,7 +110,8 @@ public class AjaxEntryAction {
                 .setParameter("##id##", e.getId())
                 .setParameter("##name##", e.getName())
                 .setParameter("##prio##", e.getPriority())
-                .setParameter("##desc##", e.getDescription().replaceAll("\n","<br>"));
+                .setParameter("##desc##", e.getDescription().replaceAll("\n","<br>"))
+                .setParameter("##project##", e.getProject().getName());
         String read = tpl.generate();
         return read;
     }

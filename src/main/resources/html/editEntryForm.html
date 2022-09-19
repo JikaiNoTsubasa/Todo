@@ -1,0 +1,23 @@
+<h1>###id##</h1>
+<table style="width:100%;">
+    <tr>
+        <td>Name</td>
+        <td><input type="text" class="sb-input" id="i_name" value="##name##"></td>
+    </tr>
+    <tr>
+        <td>Description</td>
+        <td><textarea class="sb-textarea" id="i_desc" rows="5">##desc##</textarea></td>
+    </tr>
+    <tr>
+        <td>Priority</td>
+        <td>
+            <select id="i_prio" class="sb-dropdown">
+                ##prio##
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <input type="hidden" value="##id##" id="i_id">
+        <td colspan="2"><span class="sb-button sb-right" onclick="updateEntry();">Update</span></td>
+    </tr>
+</table>

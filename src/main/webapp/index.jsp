@@ -110,6 +110,27 @@
             });
         }
 
+        function openModalEdit(id){
+            $.ajax({
+                url: 'ajaxentries',
+                method: 'get',
+                data: {
+                    strutsAction: 'editEntry',
+                    strutsEntryId: id
+                },
+                success: function(response){
+                    console.log(response);
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
         function callbackDelete(){
             ajaxRefreshEntries();
         }
