@@ -49,5 +49,52 @@
             </div>
         </div>
     </div>
+    <script>
+        $(function(){
+            $("#modal-close").click(function(){
+                $("#modal").hide();
+            });
+
+            var modal = document.getElementById("modal");
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    $("#modal").hide();
+                }
+            }
+        });
+
+        function closeModal(){
+            $("#modal").hide();
+        }
+
+        function openModalDelete(id){
+            $.ajax({
+                url: 'ajaxentries',
+                method: 'get',
+                data: {
+                    strutsAction: 'askConfirmDelete',
+                    strutsEntryId: id
+                },
+                success: function(response){
+                    console.log(response);
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
+        function callbackDelete(){
+            window.location.href = "archive";
+        }
+
+        function callbackChangeStatus(){
+            window.location.href = "archive";
+        }
+    </script>
 </body>
 </html>

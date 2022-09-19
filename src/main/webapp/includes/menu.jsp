@@ -2,6 +2,7 @@
 <div class="sb-menu-bar">
     <a href="index">Home</a>
     <a href="archive">Archive</a>
+    <a href="person">Persons</a>
     <a href="admin">Admin</a>
 
     <div class="sb-menu-right"><a href="disconnect"><s:property value="#session['user'].name"></s:property></a></div>

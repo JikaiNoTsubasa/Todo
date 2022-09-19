@@ -1,9 +1,6 @@
 package fr.triedge.todo.database;
 
-import fr.triedge.todo.model.Entry;
-import fr.triedge.todo.model.Project;
-import fr.triedge.todo.model.Status;
-import fr.triedge.todo.model.User;
+import fr.triedge.todo.model.*;
 import fr.triedge.todo.utils.PWDManager;
 
 import java.sql.*;
@@ -53,7 +50,7 @@ public class DB {
 
     public ArrayList<Entry> getEntriesFilter(boolean isArchived) throws SQLException {
         ArrayList<Entry> entries = new ArrayList<>();
-        String filter = "";
+        String filter = " ";
         if (isArchived)
             filter = " where status_name = 'Closed' ";
         String sql = "select * from td_entry left join ama_user on entry_user=user_id left join td_status on status_id=entry_status left join td_project on entry_project=project_id" + filter + "order by entry_priority, project_priority asc";
@@ -72,6 +69,20 @@ public class DB {
         res.close();
         stmt.close();
         return entries;
+    }
+
+    public ArrayList<Person> getPersons() throws SQLException {
+        ArrayList<Person> persons = new ArrayList<>();
+        String sql = "select * from td_person";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        ResultSet res = stmt.executeQuery();
+        while(res.next()){
+            Person p = new Person(res);
+            persons.add(p);
+        }
+        res.close();
+        stmt.close();
+        return persons;
     }
 
     public ArrayList<Entry> getEntries() throws SQLException {
