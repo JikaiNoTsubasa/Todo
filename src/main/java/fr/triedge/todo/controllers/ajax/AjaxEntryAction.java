@@ -18,8 +18,10 @@ public class AjaxEntryAction {
 
     private String strutsAction;
     private String strutsEntryName;
+    private String strutsEntryDesc;
     private String strutsEntryId;
     private String strutsStatusId;
+    private String strutsPriority;
     private String strutsProjectId;
     private InputStream inputStream;
 
@@ -41,10 +43,28 @@ public class AjaxEntryAction {
                 result = processChangeStatus();
             }else if (getStrutsAction().equalsIgnoreCase("editEntry")){
                 result = processEditEntry();
+            }else if (getStrutsAction().equalsIgnoreCase("updateEntry")){
+                result = processUpdateEntry();
             }
         }
         inputStream = new ByteArrayInputStream(result.getBytes("UTF-8"));
         return "success";
+    }
+
+    private String processUpdateEntry() throws SQLException {
+        if (getStrutsEntryId() == null)
+            return "Id is null";
+        int id = Integer.parseInt(getStrutsEntryId());
+        String name = getStrutsEntryName();
+        String desc = getStrutsEntryDesc();
+        int prio = Integer.parseInt(getStrutsPriority());
+        Entry e = new Entry();
+        e.setId(id);
+        e.setName(name);
+        e.setDescription(desc);
+        e.setPriority(prio);
+        DB.getInstance().updateEntry(e, id);
+        return "";
     }
 
     private String processEditEntry() throws SQLException {
@@ -203,5 +223,21 @@ public class AjaxEntryAction {
 
     public void setStrutsStatusId(String strutsStatusId) {
         this.strutsStatusId = strutsStatusId;
+    }
+
+    public String getStrutsEntryDesc() {
+        return strutsEntryDesc;
+    }
+
+    public void setStrutsEntryDesc(String strutsEntryDesc) {
+        this.strutsEntryDesc = strutsEntryDesc;
+    }
+
+    public String getStrutsPriority() {
+        return strutsPriority;
+    }
+
+    public void setStrutsPriority(String strutsPriority) {
+        this.strutsPriority = strutsPriority;
     }
 }

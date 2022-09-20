@@ -71,9 +71,22 @@ public class DB {
         return entries;
     }
 
-    public ArrayList<Person> getPersons() throws SQLException {
+    public void updateEntry(Entry entry, int id) throws SQLException {
+        if (entry == null)
+            return;
+        String sql = "update td_entry set entry_name=?, entry_desc=?, entry_priority=? where entry_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setString((int)1, entry.getName());
+        stmt.setString((int)2, entry.getDescription());
+        stmt.setInt((int)3, entry.getPriority());
+        stmt.setInt((int)4, id);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public ArrayList<Person> getPersonsByLastVisited() throws SQLException {
         ArrayList<Person> persons = new ArrayList<>();
-        String sql = "select * from td_person";
+        String sql = "select * from td_person order by person_last_visited asc";
         PreparedStatement stmt = getConnection().prepareStatement(sql);
         ResultSet res = stmt.executeQuery();
         while(res.next()){
@@ -83,6 +96,70 @@ public class DB {
         res.close();
         stmt.close();
         return persons;
+    }
+
+    public Person getPerson(int id) throws SQLException {
+        Person p = null;
+        String sql = "select * from td_person where person_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setInt((int)1, id);
+        ResultSet res = stmt.executeQuery();
+        while(res.next()){
+            p = new Person(res);
+        }
+        res.close();
+        stmt.close();
+        return p;
+    }
+
+    public void updatePerson(Person person, int id) throws SQLException {
+        if (person == null)
+            return;
+        String sql = "update td_person set " +
+                "person_username=?, " +
+                "person_firstname=?, " +
+                "person_lastname=?, " +
+                "person_location=?, " +
+                "person_is_admin=?, " +
+                "person_mol_edit=?, " +
+                "person_info=?, " +
+                "person_lang=?" +
+                "person_last_visited=?" +
+                "where person_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        int idx = 0;
+        stmt.setString(++idx, person.getUsername());
+        stmt.setString(++idx, person.getFirstname());
+        stmt.setString(++idx, person.getLastname());
+        stmt.setString(++idx, person.getLocation());
+        stmt.setBoolean(++idx, person.isAdmin());
+        stmt.setBoolean(++idx, person.isCanEditMol());
+        stmt.setString(++idx, person.getInfo());
+        stmt.setString(++idx, person.getLang());
+        if (person.getLastVisited() != null){
+            Timestamp tt = new Timestamp(person.getLastVisited().getTime());
+            stmt.setTimestamp(++idx, tt);
+        }else{
+            stmt.setTimestamp(++idx, null);
+        }
+        stmt.setInt(++idx, id);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void createNewPerson(String username, String firstname, String lastname, String location, boolean isAdmin, boolean canEditMol, String info, String lang) throws SQLException {
+        String sql = "insert into td_person (person_username, person_firstname, person_lastname, person_location, person_is_admin, person_mol_edit, person_info, person_lang)values(?,?,?,?,?,?,?,?)";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        int idx = 0;
+        stmt.setString(++idx, username);
+        stmt.setString(++idx, firstname);
+        stmt.setString(++idx, lastname);
+        stmt.setString(++idx, location);
+        stmt.setBoolean(++idx, isAdmin);
+        stmt.setBoolean(++idx, canEditMol);
+        stmt.setString(++idx, info);
+        stmt.setString(++idx, lang);
+        stmt.executeUpdate();
     }
 
     public ArrayList<Entry> getEntries() throws SQLException {

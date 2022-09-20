@@ -13,7 +13,7 @@ public class PersonAction {
     public String execute(){
 
         try {
-            persons = DB.getInstance().getPersons();
+            persons = DB.getInstance().getPersonsByLastVisited();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

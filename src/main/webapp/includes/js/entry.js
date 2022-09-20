@@ -69,3 +69,24 @@ function ajaxChangeStatus(id,status_id){
         }
     });
 }
+
+function updateEntry(id){
+    $.ajax({
+        url: 'ajaxentries',
+        method: 'post',
+        data: {
+            strutsAction: 'updateEntry',
+            strutsEntryName: $("#i_name").val(),
+            strutsEntryDesc: $("#i_desc").val(),
+            strutsPriority: $("#i_prio").val(),
+            strutsEntryId: id
+        },
+        success: function(response){
+            ajaxRefreshEntries();
+        },
+        error: function(xhr, status){
+            console.log("["+status+"]: "+xhr.responseText);
+        }
+    });
+    $("#modal").hide();
+}

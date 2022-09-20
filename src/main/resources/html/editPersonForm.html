@@ -1,0 +1,42 @@
+<h1>Edit ###id##</h1>
+<table>
+  <tr>
+    <td>Username*:</td>
+    <td><input type="text" id="i_username" class="sb-input" value="##username##" required/></td>
+    <td>Lastname*:</td>
+    <td><input type="text" id="i_lastname" class="sb-input"value="##lastname##" required/></td>
+  </tr>
+  <tr>
+    <td>Location:</td>
+    <td><input type="text" id="i_location" class="sb-input" value="##location##"/></td>
+    <td>Firstname*:</td>
+    <td><input type="text" id="i_firstname" class="sb-input" value="##firstname##" required/></td>
+  </tr>
+  <tr>
+    <td>Info:</td>
+    <td><textarea class="sb-textarea" id="i_info">##info##</textarea></td>
+    <td>Is Admin:</td>
+    <td><input type="checkbox" id="i_admin" ##isadmin##/></td>
+  </tr>
+  <tr>
+    <td>Lang:</td>
+    <td>
+      <select id="i_lang" class="sb-select">
+        ##lang##
+      </select>
+    </td>
+    <td>Can edit Mols:</td>
+    <td><input type="checkbox" id="i_canEditMol" ##caneditmol##/></td>
+  </tr>
+  <tr>
+    <td>Last visited:</td>
+    <td><input type="date" id="i_lastVisited" value="##lastvisited##" class="sb-input"/></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <span class="sb-button sb-right" onclick="updatePerson(###id##);">Update</span>
+    </td>
+  </tr>
+</table>

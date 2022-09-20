@@ -29,6 +29,7 @@ public class Person {
             setAdmin(res.getBoolean("person_is_admin"));
             setCanEditMol(res.getBoolean("person_mol_edit"));
             setInfo(res.getString("person_info"));
+            setLang(res.getString("person_lang"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

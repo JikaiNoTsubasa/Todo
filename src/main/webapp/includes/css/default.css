@@ -161,6 +161,26 @@ body{
     outline-width: 0;
 }
 
+.sb-filter{
+    text-decoration: none;
+    text-align: left;
+    display: inline-block;
+    border: 1px solid #404040;
+    border-radius: 0.25rem;
+    background-color: #333;
+    color: #FAFAFA;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 5px;
+    caret-color: #FF4F00;
+}
+
+.sb-filter:focus{
+    outline-width: 0;
+}
+
 .sb-textarea{
     width: 100%;
     background-color: #333;
@@ -335,6 +355,21 @@ body{
     position: absolute;
     vertical-align: bottom;
     height: 16px;
+    top: 1px;
+    right: 1px;
+}
+
+.sb-person-lang{
+    position: absolute;
+    vertical-align: bottom;
+    height: 10px;
+    font-size: 10px;
+    color: #FF4F00;
     bottom: 1px;
     right: 1px;
+}
+
+.sb-highlight{
+    background-color: #FF4F00;
+    color: #fafafa;
 }

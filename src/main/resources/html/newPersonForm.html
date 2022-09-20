@@ -1,0 +1,43 @@
+<table>
+    <tr>
+        <td>Username*:</td>
+        <td><input type="text" id="i_username" class="sb-input" required/></td>
+    </tr>
+    <tr>
+        <td>Firstname*:</td>
+        <td><input type="text" id="i_firstname" class="sb-input" required/></td>
+    </tr>
+    <tr>
+        <td>Lastname*:</td>
+        <td><input type="text" id="i_lastname" class="sb-input" required/></td>
+    </tr>
+    <tr>
+        <td>Location:</td>
+        <td><input type="text" id="i_location" class="sb-input"/></td>
+    </tr>
+    <tr>
+        <td>Info:</td>
+        <td><textarea class="sb-textarea" id="i_info"></textarea></td>
+    </tr>
+    <tr>
+        <td>Lang:</td>
+        <td>
+            <select id="i_lang" class="sb-select">
+                <option value="EN">EN</option>
+                <option value="FR">FR</option>
+                <option value="DE">DE</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Is Admin:</td>
+        <td><input type="checkbox" id="i_admin"/></td>
+    </tr>
+    <tr>
+        <td>Can edit Mols:</td>
+        <td><input type="checkbox" id="i_canEditMol"/></td>
+    </tr>
+    <tr>
+        <td colspan="2"><span class="sb-button sb-right" onclick="createPerson();">Save</span></td>
+    </tr>
+</table>
