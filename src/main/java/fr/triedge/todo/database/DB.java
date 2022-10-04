@@ -29,7 +29,11 @@ public class DB {
             }
             PWDManager manager = new PWDManager();
             String pwd = manager.decode("JGJpdXNlclMjODg=");
-            connection = DriverManager.getConnection("jdbc:mysql://triedge.ovh/amadeus","amadeus",pwd);
+            String host = "localhost";
+            if (System.getProperty("host") != null){
+                host = System.getProperty("host");
+            }
+            connection = DriverManager.getConnection("jdbc:mysql://"+host+"/amadeus","amadeus",pwd);
         }
         return connection;
     }
