@@ -173,6 +173,16 @@ public class DB {
         stmt.setString(++idx, info);
         stmt.setString(++idx, lang);
         stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void createNewProject(String name, int priority) throws SQLException {
+        String sql = "insert into td_project(project_name,project_priority)values(?,?)";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setString((int)1, name);
+        stmt.setInt((int)2, priority);
+        stmt.executeUpdate();
+        stmt.close();
     }
 
     public ArrayList<Entry> getEntries() throws SQLException {
