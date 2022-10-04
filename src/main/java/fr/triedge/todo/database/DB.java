@@ -223,6 +223,28 @@ public class DB {
         return entry;
     }
 
+    public Project getProject(int id) throws SQLException {
+        Project p = null;
+        String sql = "select * from td_project where project_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setInt((int)1, id);
+        ResultSet res = stmt.executeQuery();
+        while (res.next()){
+            p = new Project(res);
+        }
+        res.close();
+        stmt.close();
+        return p;
+    }
+
+    public void deleteProject(int id) throws SQLException {
+        String sql = "delete from td_project where project_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setInt((int)1, id);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
     public void deleteEntry(int id) throws SQLException {
         String sql = "delete from td_entry where entry_id=?";
         PreparedStatement stmt = getConnection().prepareStatement(sql);

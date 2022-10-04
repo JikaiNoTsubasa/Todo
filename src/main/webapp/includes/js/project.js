@@ -13,3 +13,18 @@ function createProject(){
         }
     });
 }
+
+function deleteProject(id){
+    $.ajax({
+        url: 'ajaxprojects',
+        method: 'post',
+        data: {
+            strutsAction: 'deleteProject',
+            strutsProjectId: id
+        },
+        success: function(response){
+            closeModal();
+            window.location.href = "admin";
+        }
+    });
+}

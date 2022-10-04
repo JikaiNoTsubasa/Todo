@@ -31,6 +31,7 @@
                         <th>#ID</th>
                         <th>Name</th>
                         <th>Priority</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,9 @@
                             <td><s:property value="id"></s:property></td>
                             <td><s:property value="name"></s:property></td>
                             <td><s:property value="priority"></s:property></td>
+                            <td>
+                                <span class="sb-link2" onclick="openModalDeleteProject(<s:property value="id"></s:property>, 1);">Delete</span>
+                            </td>
                         </tr>
                     </s:iterator>
                 </tbody>
@@ -71,6 +75,27 @@
                 strutsAction: 'newProjectForm'
             },
             success: function(response){
+                $("#modal-content").html(response);
+                openModal();
+            },
+            error: function(xhr, status){
+                console.log("["+status+"]: "+xhr.responseText);
+                $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                openModal();
+            }
+        });
+    }
+
+    function openModalDeleteProject(id){
+        $.ajax({
+            url: 'ajaxprojects',
+            method: 'get',
+            data: {
+                strutsAction: 'askConfirmDelete',
+                strutsProjectId: id
+            },
+            success: function(response){
+                console.log(response);
                 $("#modal-content").html(response);
                 openModal();
             },

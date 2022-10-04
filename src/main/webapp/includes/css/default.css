@@ -312,6 +312,7 @@ body{
 
 .sb-table{
     border: 1px solid #aaaaaa;
+    font-size: 12px;
     border-collapse: collapse;
 }
 

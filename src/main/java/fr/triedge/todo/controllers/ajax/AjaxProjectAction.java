@@ -13,6 +13,7 @@ public class AjaxProjectAction {
 
     private String strutsAction;
     private String strutsProjectName;
+    private String strutsProjectId;
     private String strutsProjectPriority;
     private InputStream inputStream;
 
@@ -24,11 +25,43 @@ public class AjaxProjectAction {
                 result = processNewProjectForm();
             }else if (getStrutsAction().equalsIgnoreCase("createProject")){
                 result = processCreateProject();
+            }else if (getStrutsAction().equalsIgnoreCase("askConfirmDelete")){
+                result = processAskConfirmDelete();
+            }else if (getStrutsAction().equalsIgnoreCase("deleteProject")){
+                result = processDeleteProject();
             }
         }
 
         inputStream = new ByteArrayInputStream(result.getBytes("UTF-8"));
         return "success";
+    }
+
+    private String processDeleteProject() {
+        if (getStrutsProjectId() == null)
+            return "ID is null";
+        int id = Integer.parseInt(getStrutsProjectId());
+        try {
+            DB.getInstance().deleteProject(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "";
+    }
+
+    private String processAskConfirmDelete() {
+        if (getStrutsProjectId() == null) {
+            return "ID is null";
+        }
+        Template tpl = new Template("/html/askConfirmDeleteProject.html");
+        int id = Integer.parseInt(getStrutsProjectId());
+        try {
+            Project p = DB.getInstance().getProject(id);
+            tpl.setParameter("##id##", p.getId());
+            tpl.setParameter("##name##", p.getName());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tpl.generate();
     }
 
     private String processCreateProject() {
@@ -46,6 +79,14 @@ public class AjaxProjectAction {
     private String processNewProjectForm(){
         Template tpl = new Template("/html/newProjectForm.html");
         return tpl.generate();
+    }
+
+    public String getStrutsProjectId() {
+        return strutsProjectId;
+    }
+
+    public void setStrutsProjectId(String strutsProjectId) {
+        this.strutsProjectId = strutsProjectId;
     }
 
     public String getStrutsProjectName() {
