@@ -246,7 +246,6 @@ body{
     color: #FAFAFA;
     height: 30px;
     line-height: 30px;
-    text-align: center;
     padding-left: 10px;
     padding-right: 10px;
     margin-right: 5px;
@@ -254,6 +253,10 @@ body{
 
 .sb-dropdown:focus{
     outline-width: 0;
+}
+
+.sb-centered{
+    text-align: center;
 }
 
 .sb-modal{
