@@ -25,7 +25,7 @@ function ajaxNewEntry(name, project_id){
             ajaxRefreshEntries();
         },
         error: function(xhr, status){
-            console.log("["+status+"]: "+xhr.responseText);
+            console.log("["+status+"]");
         }
     });
 }
@@ -43,7 +43,7 @@ function ajaxDeleteEntry(id){
             callbackDelete();
         },
         error: function(xhr, status){
-            console.log("["+status+"]: "+xhr.responseText);
+            console.log("["+status+"]");
         }
     });
     $("#modal").hide();
@@ -65,7 +65,7 @@ function ajaxChangeStatus(id,status_id){
             callbackChangeStatus();
         },
         error: function(xhr, status){
-            console.log("["+status+"]: "+xhr.responseText);
+            console.log("["+status+"]");
         }
     });
 }
@@ -79,13 +79,14 @@ function updateEntry(id){
             strutsEntryName: $("#i_name").val(),
             strutsEntryDesc: $("#i_desc").val(),
             strutsPriority: $("#i_prio").val(),
+            strutsProjectId: $("#i_proj").val(),
             strutsEntryId: id
         },
         success: function(response){
             ajaxRefreshEntries();
         },
         error: function(xhr, status){
-            console.log("["+status+"]: "+xhr.responseText);
+            console.log("["+status+"]");
         }
     });
     $("#modal").hide();

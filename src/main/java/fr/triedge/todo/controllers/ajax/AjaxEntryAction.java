@@ -3,6 +3,7 @@ package fr.triedge.todo.controllers.ajax;
 import com.opensymphony.xwork2.ActionContext;
 import fr.triedge.todo.database.DB;
 import fr.triedge.todo.model.Entry;
+import fr.triedge.todo.model.Project;
 import fr.triedge.todo.model.User;
 import fr.triedge.todo.tpl.Template;
 import fr.triedge.todo.utils.Utils;
@@ -59,11 +60,15 @@ public class AjaxEntryAction {
         String name = getStrutsEntryName();
         String desc = getStrutsEntryDesc();
         int prio = Integer.parseInt(getStrutsPriority());
+        int projectId = Integer.parseInt(getStrutsProjectId());
+        Project p = new Project();
+        p.setId(projectId);
         Entry e = new Entry();
         e.setId(id);
         e.setName(name);
         e.setDescription(desc);
         e.setPriority(prio);
+        e.setProject(p);
         DB.getInstance().updateEntry(e, id);
         return "";
     }
@@ -73,14 +78,29 @@ public class AjaxEntryAction {
             return "Id is null";
         int id = Integer.parseInt(getStrutsEntryId());
         Entry entry = DB.getInstance().getEntry(id);
+        ArrayList<Project> projects = DB.getInstance().getProjects();
 
         StringBuilder selectPrio = new StringBuilder();
-
         for(int i = 1; i <=10; ++i){
             String sel = "";
             if (entry.getPriority() == i)
                 sel = "selected";
-            selectPrio.append("<option value=\""+i+"\" "+sel+">"+i+"</option>");
+            selectPrio.append("<option value=\"").append(i).append("\" ").append(sel).append(">").append(i).append("</option>");
+        }
+
+        StringBuilder selectProject = new StringBuilder();
+        for (Project p : projects){
+            String sel = "";
+            if (entry.getProject().getId() == p.getId())
+                sel = "selected";
+            selectProject
+                    .append("<option value=\"")
+                    .append(p.getId())
+                    .append("\" ")
+                    .append(sel)
+                    .append(">")
+                    .append(p.getName())
+                    .append("</option>");
         }
 
         Template tpl = new Template("/html/editEntryForm.html");
@@ -88,7 +108,8 @@ public class AjaxEntryAction {
                 .setParameter("##id##", entry.getId())
                 .setParameter("##name##", entry.getName())
                 .setParameter("##desc##", entry.getDescription())
-                .setParameter("##prio##", selectPrio.toString());
+                .setParameter("##prio##", selectPrio.toString())
+                .setParameter("##project##", selectProject.toString());
         return tpl.generate();
     }
 

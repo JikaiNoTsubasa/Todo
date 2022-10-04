@@ -78,12 +78,13 @@ public class DB {
     public void updateEntry(Entry entry, int id) throws SQLException {
         if (entry == null)
             return;
-        String sql = "update td_entry set entry_name=?, entry_desc=?, entry_priority=? where entry_id=?";
+        String sql = "update td_entry set entry_name=?, entry_desc=?, entry_priority=?, entry_project=? where entry_id=?";
         PreparedStatement stmt = getConnection().prepareStatement(sql);
         stmt.setString((int)1, entry.getName());
         stmt.setString((int)2, entry.getDescription());
         stmt.setInt((int)3, entry.getPriority());
-        stmt.setInt((int)4, id);
+        stmt.setInt((int)4, entry.getProject().getId());
+        stmt.setInt((int)5, id);
         stmt.executeUpdate();
         stmt.close();
     }
