@@ -12,6 +12,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class AjaxEntryAction {
@@ -150,7 +151,7 @@ public class AjaxEntryAction {
 
     private String processRefreshEntries() throws SQLException, UnsupportedEncodingException {
         ArrayList<Entry> entries = DB.getInstance().getEntries();
-        HashMap<String, ArrayList<Entry>> map = Utils.filterByProject(entries);
+        LinkedHashMap<String, ArrayList<Entry>> map = Utils.filterByProject(entries);
         StringBuilder tmp = new StringBuilder();
 
         Template tplPrj = new Template("/html/refreshDashboardProjects.html");

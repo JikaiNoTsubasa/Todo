@@ -5,11 +5,12 @@ import fr.triedge.todo.model.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Utils {
 
-    public static HashMap<String, ArrayList<Entry>> filterByProject(ArrayList<Entry> entries){
-        HashMap<String, ArrayList<Entry>> map = new HashMap<>();
+    public static LinkedHashMap<String, ArrayList<Entry>> filterByProject(ArrayList<Entry> entries){
+        LinkedHashMap<String, ArrayList<Entry>> map = new LinkedHashMap<>();
         for (Entry e : entries){
             if (!e.getStatus().getName().equalsIgnoreCase("closed")){
                 if (map.containsKey(e.getProject().getName())){

@@ -5,5 +5,7 @@
     <a href="person">Persons</a>
     <a href="admin">Admin</a>
 
-    <div class="sb-menu-right"><a href="disconnect"><s:property value="#session['user'].name"></s:property></a></div>
+    <div class="sb-menu-right">
+        v1.0.1 <a href="disconnect"><s:property value="#session['user'].name"></s:property></a>
+    </div>
 </div>

@@ -57,7 +57,7 @@ public class DB {
         String filter = " ";
         if (isArchived)
             filter = " where status_name = 'Closed' ";
-        String sql = "select * from td_entry left join ama_user on entry_user=user_id left join td_status on status_id=entry_status left join td_project on entry_project=project_id" + filter + "order by entry_priority, project_priority asc";
+        String sql = "select * from td_entry left join ama_user on entry_user=user_id left join td_status on status_id=entry_status left join td_project on entry_project=project_id" + filter + "order by project_priority, entry_priority asc";
         PreparedStatement stmt = getConnection().prepareStatement(sql);
         ResultSet res = stmt.executeQuery();
         while(res.next()){
