@@ -33,7 +33,7 @@
                     <option value="date">Show Filled Dates</option>
                     <option value="fr">Show FR</option>
                 </select>
-                <input type="text" onkeyup="filterInput()" id="filterInput" class="sb-filter">
+                <input type="text" onkeyup="filterInput()" id="filterInput" class="sb-filter" placeholder="Search.."><span id="resultCount"></span>
             </div>
             <div id="persons" class="sb-margin-top">
                 <s:iterator var="i" step="1" value="persons">
@@ -87,6 +87,7 @@
 
              */
         });
+        displayResultCount();
     }
 
     function filterPerson(){
@@ -126,7 +127,12 @@
                 break;
         }
 
+        displayResultCount();
+    }
 
+    function displayResultCount(){
+        let cnt = $('.sb-person:visible').length;
+        $("#resultCount").html("Returned "+ cnt + " results");
     }
 
     function openModal(){

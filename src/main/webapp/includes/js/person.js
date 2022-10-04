@@ -56,3 +56,18 @@ function updatePerson(id){
         }
     });
 }
+
+function deletePerson(id){
+    $.ajax({
+        url: 'ajaxpersons',
+        method: 'post',
+        data: {
+            strutsAction: 'deletePerson',
+            strutsPersonId: id
+        },
+        success: function(response){
+            closeModal();
+            window.location.href = "person";
+        }
+    });
+}

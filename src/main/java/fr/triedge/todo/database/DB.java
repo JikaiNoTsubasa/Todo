@@ -123,8 +123,8 @@ public class DB {
                 "person_is_admin=?, " +
                 "person_mol_edit=?, " +
                 "person_info=?, " +
-                "person_lang=?" +
-                "person_last_visited=?" +
+                "person_lang=?, " +
+                "person_last_visited=? " +
                 "where person_id=?";
         PreparedStatement stmt = getConnection().prepareStatement(sql);
         int idx = 0;
@@ -143,6 +143,14 @@ public class DB {
             stmt.setTimestamp(++idx, null);
         }
         stmt.setInt(++idx, id);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void deletePerson(int id) throws SQLException {
+        String sql = "delete from td_person where person_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setInt((int) 1, id);
         stmt.executeUpdate();
         stmt.close();
     }

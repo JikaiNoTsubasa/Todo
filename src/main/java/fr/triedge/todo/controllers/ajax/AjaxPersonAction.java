@@ -40,11 +40,26 @@ public class AjaxPersonAction {
                 result = processEditPersonForm();
             } else if (getStrutsAction().equalsIgnoreCase("updatePerson")){
                 result = processUpdatePerson();
+            } else if (getStrutsAction().equalsIgnoreCase("deletePerson")){
+                result = processDeletePerson();
             }
         }
 
         inputStream = new ByteArrayInputStream(result.getBytes("UTF-8"));
         return "success";
+    }
+
+    private String processDeletePerson() {
+        if (getStrutsPersonId() == null)
+            return "Id is null";
+        int id = Integer.parseInt(getStrutsPersonId());
+        try {
+            DB.getInstance().deletePerson(id);
+        } catch (SQLException e) {
+            System.err.println("Failed to delete person "+id+": "+e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return "";
     }
 
     private String processUpdatePerson() {
@@ -67,7 +82,7 @@ public class AjaxPersonAction {
             if (dd != null)
                 p.setLastVisited(dd);
         } catch (ParseException e) {
-            System.err.println("Failed to parse date"+e.getMessage());
+            System.err.println("Failed to parse date: "+e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -81,7 +96,7 @@ public class AjaxPersonAction {
     }
 
     private Date getStrutsLastVisitedAsDate() throws ParseException {
-        if (getStrutsPersonLastVisited() == null)
+        if (getStrutsPersonLastVisited() == null || getStrutsPersonLastVisited().equalsIgnoreCase(""))
             return null;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -106,10 +121,12 @@ public class AjaxPersonAction {
             tpl.setParameter("##caneditmol##", p.isCanEditMol()?"checked":"");
             if (p.getLang() != null){
                 switch(p.getLang()){
-                    case "EN": tpl.setParameter("##lang##","<option value=\"EN\" selected>EN</option><option value=\"FR\">FR</option><option value=\"DE\">DE</option>");break;
+                    default: tpl.setParameter("##lang##","<option value=\"EN\" selected>EN</option><option value=\"FR\">FR</option><option value=\"DE\">DE</option>");break;
                     case "FR": tpl.setParameter("##lang##","<option value=\"EN\">EN</option><option value=\"FR\" selected>FR</option><option value=\"DE\">DE</option>");break;
                     case "DE": tpl.setParameter("##lang##","<option value=\"EN\">EN</option><option value=\"FR\">FR</option><option value=\"DE\" selected>DE</option>");break;
                 }
+            }else{
+                tpl.setParameter("##lang##","<option value=\"EN\" selected>EN</option><option value=\"FR\">FR</option><option value=\"DE\">DE</option>");
             }
             if (p.getLastVisited() != null){
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
