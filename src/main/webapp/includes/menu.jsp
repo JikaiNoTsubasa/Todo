@@ -6,6 +6,6 @@
     <a href="admin">Admin</a>
 
     <div class="sb-menu-right">
-        v1.0.3 <a href="disconnect"><s:property value="#session['user'].name"></s:property></a>
+        v1.0.4 <a href="disconnect"><s:property value="#session['user'].name"></s:property></a>
     </div>
 </div>
