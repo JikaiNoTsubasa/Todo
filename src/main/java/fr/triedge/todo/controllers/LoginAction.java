@@ -1,5 +1,6 @@
 package fr.triedge.todo.controllers;
 
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import com.opensymphony.xwork2.ActionContext;
 import fr.triedge.todo.database.DB;
 import fr.triedge.todo.model.User;
@@ -21,23 +22,23 @@ public class LoginAction {
     }
 
     public String processForm(){
-        /*
-        ActionContext.getContext().getParameters().forEach((k,v)-> System.out.println("p: "+k+"="+v));
-        System.out.println(" -> processForm Login Action");
-        System.out.println(" Struts Action: "+getStrutsAction());
-        System.out.println(" Struts Login Name: "+getStrutsLoginName());
-
-         */
         if (getStrutsAction() != null && getStrutsAction().equalsIgnoreCase("login")){
             try {
                 User user = DB.getInstance().loginUser(getStrutsLoginName(), getStrutsLoginPassword(), true);
-                if (user != null){
+                if (user != null) {
                     ActionContext.getContext().getSession().put("user", user);
                     //System.out.println("Login success");
                     return "success";
-                }else{
+                } else {
                     System.out.println("Login failed");
                     return "askLogin";
+                }
+            }catch (CommunicationsException e){
+                try {
+                    DB.getInstance().resetConnection();
+                    processForm();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);

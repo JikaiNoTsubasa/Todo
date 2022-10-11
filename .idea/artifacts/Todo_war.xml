@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="todo-1.0-SNAPSHOT.war">
+    <root id="archive" name="todo.war">
       <element id="artifact" artifact-name="Todo:war exploded" />
     </root>
   </artifact>

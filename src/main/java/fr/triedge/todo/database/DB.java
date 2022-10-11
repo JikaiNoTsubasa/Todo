@@ -22,20 +22,24 @@ public class DB {
 
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()){
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            PWDManager manager = new PWDManager();
-            String pwd = manager.decode("JGJpdXNlclMjODg=");
-            String host = "localhost";
-            if (System.getProperty("host") != null){
-                host = System.getProperty("host");
-            }
-            connection = DriverManager.getConnection("jdbc:mysql://"+host+"/amadeus","amadeus",pwd);
+            resetConnection();
         }
         return connection;
+    }
+
+    public void resetConnection() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        PWDManager manager = new PWDManager();
+        String pwd = manager.decode("JGJpdXNlclMjODg=");
+        String host = "localhost";
+        if (System.getProperty("host") != null){
+            host = System.getProperty("host");
+        }
+        connection = DriverManager.getConnection("jdbc:mysql://"+host+"/amadeus","amadeus",pwd);
     }
 
     public ArrayList<Project> getProjects() throws SQLException {
