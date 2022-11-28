@@ -26,5 +26,10 @@
       <option name="name" value="bioinfo_thirdparty" />
       <option name="url" value="http://bioinfo.idorsia.com:8081/nexus/content/repositories/thirdparty" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven-releases" />
+      <option name="name" value="maven-releases" />
+      <option name="url" value="https://nexus.idorsia.com/repository/maven-releases/" />
+    </remote-repository>
   </component>
 </project>
