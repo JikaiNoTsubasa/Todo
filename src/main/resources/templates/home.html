@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <title>Inventory Admin</title>
+    <th:block th:include="fragments::meta"></th:block>
+</head>
+<body>
+    <div th:replace="fragments::menu"></div>
+    <script src="includes/js/entry.js"></script>
+
+    <div class="sb-modal" id="modal">
+        <div class="sb-modal-content">
+            <span class="sb-close" id="modal-close">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="sb-container">
+        <form id="form_new_entry">
+            <div class="sb-margin-top">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            <select id="select_project" class="sb-select">
+                                <option th:each="p:${projects}" th:value="${p.id}" th:text="${p.name}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <input id="input_new_entry" class="sb-input" type="text" placeholder="New Entry">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+
+        <div id="entries">
+
+        </div>
+
+    </div>
+
+    <script>
+        $(function(){
+            $("#form_new_entry").submit(function(e){
+                e.preventDefault();
+                let entry_name = $('#input_new_entry').val();
+                let project_id = $('#select_project').val();
+                $('#input_new_entry').val("");
+                ajaxNewEntry(entry_name, project_id);
+            });
+
+            $("#modal-close").click(function(){
+                closeModal();
+            });
+
+            var modal = document.getElementById("modal");
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            }
+
+            ajaxRefreshEntries();
+        });
+
+        function openModalShowEntry(id){
+            $.ajax({
+                url: 'home/getentry',
+                method: 'get',
+                data: {
+                    entryId: id
+                },
+                success: function(response){
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
+        function openModalEdit(id){
+            $.ajax({
+                url: 'home/editentry',
+                method: 'get',
+                data: {
+                    entryId: id
+                },
+                success: function(response){
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
+        function openModalDelete(id){
+            $.ajax({
+                url: 'home/confirmdelete',
+                method: 'get',
+                data: {
+                    entryId: id
+                },
+                success: function(response){
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
+        function callbackDelete(){
+            ajaxRefreshEntries();
+        }
+
+        function callbackChangeStatus(){
+            ajaxRefreshEntries();
+        }
+
+        function closeModal(){
+            $("#modal").hide();
+        }
+    </script>
+</body>
+</html>

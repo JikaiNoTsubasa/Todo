@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <title>Inventory Admin</title>
+    <th:block th:include="fragments::meta"></th:block>
+</head>
+<body>
+    <div th:replace="fragments::menu"></div>
+    <script src="includes/js/entry.js"></script>
+
+    <div class="sb-modal" id="modal">
+        <div class="sb-modal-content">
+            <span class="sb-close" id="modal-close">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="sb-container">
+        <div class="sb-card sb-margin-top">
+            <div class="sb-card-header">
+                Archives
+            </div>
+            <div class="sb-card-body">
+                <table class="sb-table sb-w100">
+                    <thead>
+                    <th>Name</th>
+                    <th>Priority</th>
+                    <th>Description</th>
+                    <th>Project</th>
+                    <th>Actions</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="e:${entries}">
+                        <td th:text="${e.name}"></td>
+                        <td th:text="${e.priority}"></td>
+                        <td th:text="${e.description}"></td>
+                        <td th:text="${e.project.name}"></td>
+                        <td>
+                            <span class="sb-link2" th:onclick="@{${'ajaxChangeStatus('+e.id+',1);'}}">Re-Open</span>
+                            <span class="sb-link2" th:onclick="@{${'openModalDelete('+e.id+',1);'}}">Delete</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            $("#modal-close").click(function(){
+                $("#modal").hide();
+            });
+
+            var modal = document.getElementById("modal");
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    $("#modal").hide();
+                }
+            }
+        });
+
+        function closeModal(){
+            $("#modal").hide();
+        }
+
+        function openModalDelete(id){
+            $.ajax({
+                url: 'home/confirmdelete',
+                method: 'get',
+                data: {
+                    entryId: id
+                },
+                success: function(response){
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
+        function callbackDelete(){
+            window.location.href = "archive";
+        }
+
+        function callbackChangeStatus(){
+            window.location.href = "archive";
+        }
+    </script>
+</body>
+</html>

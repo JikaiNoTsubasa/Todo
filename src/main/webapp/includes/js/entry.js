@@ -1,10 +1,7 @@
 function ajaxRefreshEntries(){
     $.ajax({
-        url: 'ajaxentries',
+        url: 'home/refresh',
         method: 'get',
-        data: {
-            strutsAction: 'refreshEntries'
-        },
         success: function(response){
             $("#entries").html(response);
         }
@@ -13,15 +10,13 @@ function ajaxRefreshEntries(){
 
 function ajaxNewEntry(name, project_id){
     $.ajax({
-        url: 'ajaxentries',
+        url: 'home/newentry',
         method: 'post',
         data: {
-            strutsAction: 'newEntry',
-            strutsEntryName: name,
-            strutsProjectId: project_id
+            entryName: name,
+            projectId: project_id
         },
         success: function(response){
-            //console.log(response);
             ajaxRefreshEntries();
         },
         error: function(xhr, status){
@@ -32,14 +27,12 @@ function ajaxNewEntry(name, project_id){
 
 function ajaxDeleteEntry(id){
     $.ajax({
-        url: 'ajaxentries',
+        url: 'home/deleteentry',
         method: 'post',
         data: {
-            strutsAction: 'deleteEntry',
-            strutsEntryId: id
+            entryId: id
         },
         success: function(response){
-            //ajaxRefreshEntries();
             callbackDelete();
         },
         error: function(xhr, status){
@@ -54,12 +47,11 @@ function ajaxChangeStatus(id,status_id){
         return;
     }
     $.ajax({
-        url: 'ajaxentries',
+        url: 'home/changestatus',
         method: 'post',
         data: {
-            strutsAction: 'changeStatus',
-            strutsStatusId: status_id,
-            strutsEntryId: id
+            statusId: status_id,
+            entryId: id
         },
         success: function(response){
             callbackChangeStatus();
@@ -72,15 +64,14 @@ function ajaxChangeStatus(id,status_id){
 
 function updateEntry(id){
     $.ajax({
-        url: 'ajaxentries',
+        url: 'home/updateentry',
         method: 'post',
         data: {
-            strutsAction: 'updateEntry',
-            strutsEntryName: $("#i_name").val(),
-            strutsEntryDesc: $("#i_desc").val(),
-            strutsPriority: $("#i_prio").val(),
-            strutsProjectId: $("#i_proj").val(),
-            strutsEntryId: id
+            entryName: $("#i_name").val(),
+            entryDesc: $("#i_desc").val(),
+            priority: $("#i_prio").val(),
+            projectId: $("#i_proj").val(),
+            entryId: id
         },
         success: function(response){
             ajaxRefreshEntries();
