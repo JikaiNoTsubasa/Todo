@@ -4,10 +4,7 @@ import fr.triedge.todo.database.DB;
 import fr.triedge.todo.model.User;
 import fr.triedge.todo.utils.Vars;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,6 +38,12 @@ public class LoginController {
         }
 
         return model;
+    }
+
+    @GetMapping(Vars.DISCONNECT)
+    public ModelAndView disconnect(){
+        getSession().setAttribute("user", null);
+        return new ModelAndView("redirect:/login");
     }
 
     public HttpSession getSession(){

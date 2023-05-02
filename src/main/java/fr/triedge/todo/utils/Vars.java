@@ -23,4 +23,5 @@ public class Vars {
 
 
     public static final String VIEW_LOGIN                         = "/login";
+    public static final String DISCONNECT                         = "/disconnect";
 }
