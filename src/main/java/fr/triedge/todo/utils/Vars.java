@@ -20,4 +20,7 @@ public class Vars {
     public static final String AJAX_PERSON_CREATE_PERSON          = "/person/createperson";
     public static final String AJAX_PERSON_UPDATE_PERSON          = "/person/updateperson";
     public static final String AJAX_PERSON_DELETE_PERSON          = "/person/deleteperson";
+
+
+    public static final String VIEW_LOGIN                         = "/login";
 }
