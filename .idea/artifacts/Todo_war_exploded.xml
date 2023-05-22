@@ -14,6 +14,10 @@
           <element id="module-output" name="Todo" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.idorsia.research.api:sbilib:1.0.16" />
+          <element id="library" level="project" name="Maven: org.pushing-pixels:radiance-substance:4.5.0" />
+          <element id="library" level="project" name="Maven: org.pushing-pixels:radiance-neon:4.5.0" />
+          <element id="library" level="project" name="Maven: org.pushing-pixels:radiance-trident:4.5.0" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.30" />
           <element id="library" level="project" name="Maven: org.springdoc:springdoc-openapi-data-rest:1.6.6" />
           <element id="library" level="project" name="Maven: org.springdoc:springdoc-openapi-hateoas:1.6.6" />

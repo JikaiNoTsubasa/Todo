@@ -1,5 +1,6 @@
 package fr.triedge.todo.api;
 
+import com.idorsia.research.sbilib.utils.SPassword;
 import fr.triedge.todo.database.DB;
 import fr.triedge.todo.model.User;
 import fr.triedge.todo.utils.Vars;
@@ -9,6 +10,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
@@ -28,6 +32,7 @@ public class LoginController {
                 User user = DB.getInstance().loginUser(username, password, true);
                 if (user != null){
                     getSession().setAttribute("user", user);
+                    createLoginCookie("TodoUser", username);
                     return new ModelAndView("redirect:/home");
                 }else{
                     model.addObject("error","Username or password is incorrect.");
@@ -43,11 +48,34 @@ public class LoginController {
     @GetMapping(Vars.DISCONNECT)
     public ModelAndView disconnect(){
         getSession().setAttribute("user", null);
+        deleteLoginCookie("TodoUser");
         return new ModelAndView("redirect:/login");
     }
 
     public HttpSession getSession(){
+        return getHttpReq().getSession(true); // true == allow create
+    }
+
+    public HttpServletRequest getHttpReq(){
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        return attr.getRequest().getSession(true); // true == allow create
+        return attr.getRequest();
+    }
+
+    public HttpServletResponse getHttpRep(){
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        return attr.getResponse();
+    }
+
+    public void createLoginCookie(String name, String value){
+        SPassword pwd = new SPassword(value);
+        Cookie cookie = new Cookie(name, pwd.getEncrypted());
+        cookie.setMaxAge(86400);
+        getHttpRep().addCookie(cookie);
+    }
+
+    public void deleteLoginCookie(String name){
+        Cookie cookie = new Cookie(name, "");
+        cookie.setMaxAge(0);
+        getHttpRep().addCookie(cookie);
     }
 }

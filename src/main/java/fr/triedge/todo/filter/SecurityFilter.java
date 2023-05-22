@@ -1,14 +1,18 @@
 package fr.triedge.todo.filter;
 
+import com.idorsia.research.sbilib.utils.SPassword;
+import fr.triedge.todo.database.DB;
 import fr.triedge.todo.model.User;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Component
 @Order(1)
@@ -29,10 +33,41 @@ public class SecurityFilter implements Filter {
         User user = (User)session.getAttribute("user");
 
         if (user == null){
-            res.sendRedirect("login");
-            return;
+            // Verify cookie
+            Cookie cookie = getCookie(req.getCookies(), "TodoUser");
+            if (cookie != null){
+                SPassword pwd = new SPassword(cookie.getValue());
+                User u = null;
+                try {
+                    u = DB.getInstance().loadUser(pwd.getDecrypted());
+                    if (u != null){
+                        session.setAttribute("user", u);
+                        res.sendRedirect("home");
+                        return;
+                    }else{
+                        res.sendRedirect("login");
+                        return;
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }else{
+                res.sendRedirect("login");
+                return;
+            }
         }
 
         chain.doFilter(req, res);
+    }
+
+    private Cookie getCookie(Cookie[] cookies, String name){
+        if (cookies == null || name == null)
+            return null;
+        for (Cookie c : cookies){
+            if (c.getName().equals(name))
+                return c;
+        }
+        return null;
     }
 }

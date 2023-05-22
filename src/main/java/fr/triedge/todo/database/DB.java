@@ -292,6 +292,25 @@ public class DB {
         return user;
     }
 
+    public User loadUser(String username) throws SQLException {
+        String sql = "select * from ama_user where user_name=?";
+        User user = null;
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setString((int)1, username);
+        ResultSet res = stmt.executeQuery();
+        while (res.next()){
+            user = new User();
+            user.setUserId(res.getInt("user_id"));
+            user.setName(res.getString("user_name"));
+            user.setLevel(res.getInt("user_level"));
+            user.setDisplayName(res.getString("user_display_name"));
+        }
+        res.close();
+        stmt.close();
+
+        return user;
+    }
+
     public ArrayList<Event> getEvents() throws SQLException {
         ArrayList<Event> events = new ArrayList<>();
         String sql = "select * from td_event";
