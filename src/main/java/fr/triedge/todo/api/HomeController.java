@@ -2,6 +2,7 @@ package fr.triedge.todo.api;
 
 import fr.triedge.todo.database.DB;
 import fr.triedge.todo.model.Entry;
+import fr.triedge.todo.model.Event;
 import fr.triedge.todo.model.Project;
 import fr.triedge.todo.model.User;
 import fr.triedge.todo.tpl.Template;
@@ -29,7 +30,9 @@ public class HomeController {
         ModelAndView model = new ModelAndView("home.html");
         try {
             ArrayList<Project> projects = DB.getInstance().getProjects();
+            ArrayList<Event> events = DB.getInstance().getNotifiedEvents();
             model.addObject("projects", projects);
+            model.addObject("events", events.size()>0?events:null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

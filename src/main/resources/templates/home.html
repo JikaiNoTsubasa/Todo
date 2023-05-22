@@ -33,6 +33,19 @@
             </div>
         </form>
 
+        <div th:if="${events != null}" id="eventsNotify" style="margin-top: 20px; width: 100%;">
+            <h2>Event scheduled:</h2>
+            <table>
+                <tr th:each="ev:${events}">
+                    <td style="width:0.1%;white-space: nowrap;"><span class="sb-badge" th:text="${ev.badge}" th:style="@{${'background-color: '+ev.color}}"></span></td>
+                    <td><span th:text="${ev.title}"></span></td>
+                    <td><span th:text="${ev.type}"></span></td>
+                    <td><span th:text="${#dates.format(ev.date, 'dd-MM-yyyy')}"></span></td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Todo:</h2>
         <div id="entries">
 
         </div>
