@@ -16,8 +16,9 @@ public class Vars {
     public static final String AJAX_CALENDAR_CREATE_FORM         = "/calendar/createform";
     public static final String AJAX_CALENDAR_CREATE_EVENT        = "/calendar/createevent";
     public static final String AJAX_CALENDAR_EDIT_FORM           = "/calendar/editform";
-    public static final String AJAX_CALENDAR_EDIT_EVENT           = "/calendar/editevent";
-    public static final String AJAX_CALENDAR_SHOW_EVENT           = "/calendar/showevent";
+    public static final String AJAX_CALENDAR_EDIT_EVENT          = "/calendar/editevent";
+    public static final String AJAX_CALENDAR_SHOW_EVENT          = "/calendar/showevent";
+    public static final String AJAX_CALENDAR_DELETE_EVENT        = "/calendar/deleteevent";
 
 
     public static final String VIEW_ARCHIVE                      = "/archive";

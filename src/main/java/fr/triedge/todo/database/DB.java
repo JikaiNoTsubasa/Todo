@@ -352,4 +352,33 @@ public class DB {
         stmt.executeUpdate();
         stmt.close();
     }
+
+    public void updateEvent(Event e, int id) throws SQLException {
+        String sql = "update td_event set event_title=?,event_description=?,event_date=?,event_type=?,event_color=?,event_every_year=?,event_notify=?,event_badge=? where event_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setString((int)1, e.getTitle());
+        stmt.setString((int)2, e.getDescription());
+        if (e.getDate() != null){
+            Timestamp t = new Timestamp(e.getDate().getTime());
+            stmt.setTimestamp((int)3, t);
+        }else{
+            stmt.setTimestamp((int)3, null);
+        }
+        stmt.setString((int)4, e.getType());
+        stmt.setString((int)5, e.getColor());
+        stmt.setBoolean((int)6, e.isEveryYear());
+        stmt.setBoolean((int)7, e.isNotify());
+        stmt.setString((int)8, e.getBadge());
+        stmt.setInt((int)9, id);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void deleteEvent(int id) throws SQLException {
+        String sql = "delete from td_event where event_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setInt((int)1, id);
+        stmt.executeUpdate();
+        stmt.close();
+    }
 }

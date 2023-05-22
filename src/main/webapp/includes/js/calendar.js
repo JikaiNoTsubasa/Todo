@@ -1,4 +1,4 @@
-function createAjaxEvent(){
+function createUpdateAjaxEvent(){
     $.ajax({
         url: 'calendar/createevent',
         method: 'post',
@@ -9,17 +9,19 @@ function createAjaxEvent(){
             date: $("#i_date").val(),
             badge: $("#i_badge").val(),
             type: $("#i_type").val(),
-            year: $("#i_year").val(),
-            notify: $("#i_notify").val()
+            year: $("#i_year").is(":checked"),
+            notify: $("#i_notify").is(":checked"),
+            id: $("#i_id").val()
         },
         success: function(response){
-            ajaxFillEvents();
+            //ajaxFillEvents();
         },
         error: function(xhr, status){
             console.log("["+status+"]");
         }
     });
-    $("#modal").hide();
+    //$("#modal").hide();
+    window.location.href = "calendar";
 }
 
 function ajaxSelectEvent(id){
@@ -36,4 +38,20 @@ function ajaxSelectEvent(id){
             console.log("["+status+"]");
         }
     });
+}
+
+function ajaxDeleteEvent(id){
+    $.ajax({
+        url: 'calendar/deleteevent',
+        method: 'get',
+        data: {
+            id: id
+        },
+        success: function(response){
+        },
+        error: function(xhr, status){
+            console.log("["+status+"]");
+        }
+    });
+    window.location.href = "calendar";
 }

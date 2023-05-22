@@ -9,11 +9,17 @@
     </tr>
     <tr>
         <td>Date:</td>
-        <td><input type="date" id="i_date" class="sb-input"/></td>
+        <td><input type="date" id="i_date" class="sb-input" value="##DATE##"/></td>
     </tr>
     <tr>
         <td>Color:</td>
-        <td><input type="color" id="i_color" value="#FF7575" class="sb-input"/></td>
+        <td>
+            <input type="color" id="i_color" value="#FF7575" class="sb-input"/>
+            <br>
+            <span style="color: #FF7575; margin-right: 5px; display: inline-block;" onclick="$('#i_color').val('#FF7575');">Default</span>
+            <span style="color: #7EFF75; margin-right: 5px; display: inline-block;" onclick="$('#i_color').val('#7EFF75');">Green</span>
+            <span style="color: #75FFDD; margin-right: 5px; display: inline-block;" onclick="$('#i_color').val('#75FFDD');">Blue</span>
+        </td>
     </tr>
     <tr>
         <td>Badge:</td>
@@ -38,6 +44,9 @@
         <td><input type="checkbox" id="i_notify"/></td>
     </tr>
     <tr>
-        <td colspan="2"><span class="sb-button sb-right" onclick="createAjaxEvent();">Save</span></td>
+        <td colspan="2">
+            <input name="i_id" value="0" type="hidden"/>
+            <span class="sb-button sb-right" onclick="createUpdateAjaxEvent();">Save</span>
+        </td>
     </tr>
 </table>
