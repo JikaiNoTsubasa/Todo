@@ -164,6 +164,8 @@ public class CalendarController {
             tpl.setParameter("##BADGE##", e.getBadge());
             tpl.setParameter("##ID##", id);
             tpl.setParameter("##DESC##", e.getDescription());
+            tpl.setParameter("##NOTIFY##", e.isNotify()?"TRUE":"FALSE");
+            tpl.setParameter("##YEAR##", e.isEveryYear()?"TRUE":"FALSE");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

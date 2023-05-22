@@ -384,7 +384,7 @@ public class DB {
 
     public ArrayList<Event> getNotifiedEvents() throws SQLException {
         ArrayList<Event> evs = new ArrayList<>();
-        String sql = "select * from td_event where event_date >= DATE_SUB(NOW(),INTERVAL 1 DAY) and event_date <= DATE_ADD(NOW(), INTERVAL 1 MONTH) and event_notify=true";
+        String sql = "select * from td_event where event_date >= DATE_SUB(NOW(),INTERVAL 1 DAY) and event_date <= DATE_ADD(NOW(), INTERVAL 1 MONTH) and event_notify=true order by event_date asc";
         PreparedStatement stmt = getConnection().prepareStatement(sql);
         ResultSet res = stmt.executeQuery();
         while(res.next()){
