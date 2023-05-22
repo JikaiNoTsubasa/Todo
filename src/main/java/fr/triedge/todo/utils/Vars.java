@@ -11,6 +11,13 @@ public class Vars {
     public static final String AJAX_HOME_NEW_ENTRY               = "/home/newentry";
     public static final String AJAX_HOME_CONFIRM_ENTRY_DELETE    = "/home/confirmdelete";
     public static final String AJAX_HOME_DELETE_ENTRY            = "/home/deleteentry";
+    public static final String VIEW_CALENDAR                     = "/calendar";
+    public static final String AJAX_CALENDAR_GET_EVENTS          = "/calendar/getevents";
+    public static final String AJAX_CALENDAR_CREATE_FORM         = "/calendar/createform";
+    public static final String AJAX_CALENDAR_CREATE_EVENT        = "/calendar/createevent";
+    public static final String AJAX_CALENDAR_EDIT_FORM           = "/calendar/editform";
+    public static final String AJAX_CALENDAR_EDIT_EVENT           = "/calendar/editevent";
+    public static final String AJAX_CALENDAR_SHOW_EVENT           = "/calendar/showevent";
 
 
     public static final String VIEW_ARCHIVE                      = "/archive";

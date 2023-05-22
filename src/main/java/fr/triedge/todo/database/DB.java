@@ -5,6 +5,7 @@ import fr.triedge.todo.utils.PWDManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DB {
 
@@ -289,5 +290,66 @@ public class DB {
         stmt.close();
 
         return user;
+    }
+
+    public ArrayList<Event> getEvents() throws SQLException {
+        ArrayList<Event> events = new ArrayList<>();
+        String sql = "select * from td_event";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        ResultSet res = stmt.executeQuery();
+        while (res.next()){
+            events.add(buildEvent(res));
+        }
+        res.close();
+        stmt.close();
+
+        return events;
+    }
+
+    public Event getEvent(int id) throws SQLException {
+        String sql = " select * from td_event where event_id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setInt((int)1, id);
+        ResultSet res = stmt.executeQuery();
+        Event e = null;
+        if (res.next()){
+            e = buildEvent(res);
+        }
+        res.close();
+        stmt.close();
+        return e;
+    }
+
+    private Event buildEvent(ResultSet res) throws SQLException {
+        Event e = new Event();
+        e.setId(res.getInt("event_id"));
+        e.setTitle(res.getString("event_title"));
+        e.setDescription(res.getString("event_description"));
+        e.setType(res.getString("event_type"));
+        e.setBadge(res.getString("event_badge"));
+        e.setColor(res.getString("event_color"));
+        e.setNotify(res.getBoolean("event_notify"));
+        e.setEveryYear(res.getBoolean("event_every_year"));
+        Timestamp t = res.getTimestamp("event_date");
+        if (t != null){
+            e.setDate(new Date(t.getTime()));
+        }
+        return e;
+    }
+
+    public void insertEvent(Event e) throws SQLException {
+        String sql = "insert into td_event(event_title,event_description,event_date,event_type,event_color,event_every_year,event_notify,event_badge)values(?,?,?,?,?,?,?,?)";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setString((int)1, e.getTitle());
+        stmt.setString((int)2, e.getDescription());
+        if (e.getDate() != null)
+            stmt.setDate((int)3, new java.sql.Date(e.getDate().getTime()));
+        stmt.setString((int)4, e.getType());
+        stmt.setString((int)5, e.getColor());
+        stmt.setBoolean((int)6, e.isEveryYear());
+        stmt.setBoolean((int)7, e.isNotify());
+        stmt.setString((int)8, e.getBadge());
+        stmt.executeUpdate();
+        stmt.close();
     }
 }

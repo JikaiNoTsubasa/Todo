@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <title>Inventory Admin</title>
+    <th:block th:include="fragments::meta"></th:block>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.3/evo-calendar/css/evo-calendar.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.3/evo-calendar/css/evo-calendar.midnight-blue.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.3/evo-calendar/js/evo-calendar.min.js"></script>
+</head>
+<body>
+    <div th:replace="fragments::menu"></div>
+    <script src="includes/js/calendar.js"></script>
+
+    <div class="sb-modal" id="modal">
+        <div class="sb-modal-content">
+            <span class="sb-close" id="modal-close">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="sb-container">
+        <div style="margin-top: 20px;">
+            <span class="sb-button" onclick="openModalCreate();">+</span>
+        </div>
+
+        <div style="width: 100%; margin-top:20px;">
+            <div id="calendar"></div>
+        </div>
+
+        <div id="content-event" style="margin-top: 20px; margin-bottom: 20px;"></div>
+
+    </div>
+
+    <script>
+        $(function(){
+            ajaxFillEvents();
+
+            $("#modal-close").click(function(){
+                closeModal();
+            });
+
+            var modal = document.getElementById("modal");
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            }
+        });
+
+        function openModal(){
+            $("#modal").show();
+        }
+
+        function closeModal(){
+            $("#modal").hide();
+        }
+
+        function ajaxFillEvents(){
+            $("#calendar").evoCalendar({
+                theme: 'Midnight Blue',
+                language: 'fr',
+                todayHighlight: true
+            });
+
+            $('#calendar').on('selectEvent', function(event, activeEvent) {
+                console.log("Event: "+activeEvent.id);
+                ajaxSelectEvent(activeEvent.id)
+            });
+
+            $('#calendar').on('selectDate', function(event, newDate, oldDate) {
+                $("#content-event").html("");
+            });
+
+            $.ajax({
+                url: "calendar/getevents",
+                $method: 'get',
+                success: function(data){
+                    populateCalendar(data);
+                }
+            })
+        }
+
+        function populateCalendar(list){
+            $('#calendar').evoCalendar('addCalendarEvent', JSON.parse(list));
+        }
+
+        function openModalCreate(){
+            $.ajax({
+                url: 'calendar/createform',
+                method: 'get',
+                success: function(response){
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+
+        function openModalEdit(id){
+            $.ajax({
+                url: 'calendar/editform',
+                method: 'get',
+                data: {
+                    eventId: id
+                },
+                success: function(response){
+                    $("#modal-content").html(response);
+                    $("#modal").show();
+                },
+                error: function(xhr, status){
+                    console.log("["+status+"]: "+xhr.responseText);
+                    $("#modal-content").html("["+status+"]: "+xhr.responseText);
+                    $("#modal").show();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

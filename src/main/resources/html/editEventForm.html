@@ -1,0 +1,43 @@
+<table style="width: 100%;">
+    <tr>
+        <td style="width:0.1%;white-space: nowrap;">Title*:</td>
+        <td><input type="text" id="i_title" class="sb-input" required/></td>
+    </tr>
+    <tr>
+        <td>Description:</td>
+        <td><input type="text" id="i_description" class="sb-input"/></td>
+    </tr>
+    <tr>
+        <td>Date:</td>
+        <td><input type="date" id="i_date" class="sb-input"/></td>
+    </tr>
+    <tr>
+        <td>Color:</td>
+        <td><input type="color" id="i_color" value="#FF7575" class="sb-input"/></td>
+    </tr>
+    <tr>
+        <td>Badge:</td>
+        <td><input type="text" id="i_badge" class="sb-input"/></td>
+    </tr>
+    <tr>
+        <td>Type:</td>
+        <td>
+            <select id="i_type" class="sb-select">
+                <option value="event">Event</option>
+                <option value="holiday">Holiday</option>
+                <option value="birthday">Birthday</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Is Every Year?</td>
+        <td><input type="checkbox" id="i_year"/></td>
+    </tr>
+    <tr>
+        <td>Notify?</td>
+        <td><input type="checkbox" id="i_notify"/></td>
+    </tr>
+    <tr>
+        <td colspan="2"><span class="sb-button sb-right" onclick="createAjaxEvent();">Save</span></td>
+    </tr>
+</table>

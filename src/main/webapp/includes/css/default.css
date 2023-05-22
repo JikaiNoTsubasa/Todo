@@ -262,7 +262,7 @@ body{
 .sb-modal{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 99; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -417,4 +417,12 @@ body{
 .sb-login-button:hover{
     background: #FF4F00;
     color: #333333;
+}
+
+.sb-badge{
+    border-radius: 30px;
+    padding: 2px 8px;
+    height: 30px;
+    line-height:30px;
+    color: #FFFFFF;
 }
